@@ -1,0 +1,59 @@
+{
+  "name": "neura-webhook-sample",
+  "version": "0.1.0",
+  "description": "Sample webhook server for Neura events",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --harmony index.js",
+    "dev": "nodemon --harmony -e js,json index.js",
+    "dev:debug": "nodemon --harmony --inspect -e js,json index.js",
+    "lint": "eslint --ignore-pattern",
+    "lint:staged": "lint-staged"
+  },
+  "keywords": [
+    "neura",
+    "webhook",
+    "ios",
+    "android",
+    "push",
+    "notification",
+    "push"
+  ],
+  "author": "Matias Crivolotti <matias@theneura.com>",
+  "license": "MIT",
+  "engines": {
+    "node": "^7.5.0"
+  },
+  "lint-staged": {
+    "*.js": "lint"
+  },
+  "pre-commit": "lint:staged",
+  "dependencies": {
+    "koa": "2.0.0-alpha.8",
+    "koa-bodyparser": "3.2.0",
+    "koa-route": "3.2.0"
+  },
+  "devDependencies": {
+    "apidoc": "0.17.5",
+    "eslint": "3.15.0",
+    "eslint-config-airbnb-base": "11.1.0",
+    "eslint-plugin-import": "2.2.0",
+    "lint-staged": "3.3.0",
+    "nodemon": "1.11.0",
+    "pre-commit": "1.2.2"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 8
+    },
+    "extends": "airbnb-base",
+    "rules": {
+      "new-cap": 0,
+      "no-param-reassign": 0,
+      "prefer-arrow-callback": 0
+    }
+  }
+}

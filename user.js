@@ -1,6 +1,7 @@
 const db = require('./db')
 
 var userScheme = mongoose.Schema({
+  platform: String, // Android, iOS, etc.
   neuraID : String,
   pushToken : String,
   dateCreated : Date
@@ -9,8 +10,9 @@ var userScheme = mongoose.Schema({
 class user {
   this.user = mongoose.model('user', userScheme);
 
-  saveUser(neuraID, pushToken, dateCreated) {
+  saveUser(platform, neuraID, pushToken, dateCreated) {
     var currentUser = new this.user({
+      platform: platform,
       neuraID: neuraID, 
       pushToken: pushToken, 
       dateCreated: dateCreated

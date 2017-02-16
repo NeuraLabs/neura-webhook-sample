@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/MedAd');
-const db = mongoose.connection;
+module.exports = function connectDatabase(uri) {
+  return new Promise((resolve, reject) => {
+    mongoose.connection
+      .on('error', error => reject(error))
+      .on('close', () => console.log('Database connection closed.'))
+      .once('open', () => resolve(mongoose.connections[0]));
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  // we're connected!
-});
+    mongoose.connect(uri);
+  });
+};
 
 /*
 // var MongoClient = require('mongodb').MongoClient

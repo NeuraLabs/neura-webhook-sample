@@ -7,7 +7,7 @@
     "start": "node --harmony index.js",
     "dev": "nodemon --harmony -e js,json index.js",
     "dev:debug": "nodemon --harmony --inspect -e js,json index.js",
-    "lint": "eslint --ignore-pattern",
+    "lint": "eslint *.js",
     "lint:staged": "lint-staged"
   },
   "keywords": [

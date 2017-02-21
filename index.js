@@ -2,11 +2,11 @@ const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const route = require('koa-route');
 const APNProvider = require('./providers/apn');
-const User = require('./models/user');
+const User = require('./controllers/user');
 const connectDatabase = require('./db');
 
 const port = process.env.PORT || 3000;
-const mongoUri = process.env.MONGO_URI || 'mongodb://localhost/MedAd';
+const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
 
 (async () => {
   try {
@@ -31,23 +31,17 @@ const mongoUri = process.env.MONGO_URI || 'mongodb://localhost/MedAd';
       }
     });
 
-    app.use(route.get('/', async (ctx) => {
-      ctx.body = 'This endpoint is for POST only.';
-    }));
-
-    app.use(route.post('/', async (ctx) => {
-      // debugger;
-      push.send(JSON.stringify(ctx.request.body, null, 2));
+    app.use(route.post('/neuraevent', async (ctx) => {
+      console.log('post neuraevent:', ctx.request.body);
+      const user = await User.findOne(ctx.request.body.neura_id);
+      push.send(JSON.stringify(ctx.request.body, null, 2), user.push_token);
       ctx.body = ctx.request.body;
     }));
 
-    app.use(route.post('/adduser', async (ctx) => {
-      // debugger;
-      ctx.body = await User.create({
-        platform: ctx.request.body.platform,
-        neura_id: ctx.request.body.neura_id,
-        push_token: ctx.request.body.push_token,
-      });
+    app.use(route.post('/user', async (ctx) => {
+      console.log('post user:', ctx.request.body);
+      const user = await User.createOrUpdate(ctx.request.body);
+      ctx.body = user;
     }));
 
     await app.listen(port);

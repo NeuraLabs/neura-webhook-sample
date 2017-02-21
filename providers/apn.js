@@ -1,20 +1,22 @@
 const apn = require('apn');
 
 class APNProvider {
-  constructor() {
+  constructor(appName) {
+    const certPath = process.env.CERT_PATH || 'certificates/';
+    const certName = process.env.CERT_NAME || 'medAdKey.p12';
+    this.appName = appName;
+
     this.options = {
-      pfx: 'certificates/medAdKey.p12',
+      pfx: `${certPath}${certName}`,
       production: false,
     };
 
     this.apnProvider = new apn.Provider(this.options);
   }
 
-  send(content) {
-    const deviceToken = '5ec0259ae5764d066f52bfd3b4c732cc9ef93f10a57134dde45aa9389b00895f';
-
+  send(content, deviceToken) {
     const note = new apn.Notification();
-
+    console.log('apn send:', content, deviceToken);
     // {
     //   "messageFrom":"John Appelseed","aps":
     //   {

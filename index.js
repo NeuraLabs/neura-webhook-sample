@@ -36,7 +36,7 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
       const identifier = ctx.request.body.identifier;
       const re = new RegExp(/[a-zA-Z0-9]+_(.*)/);
 
-      if (re.search(identifier) > -1) {
+      if (identifier.search(identifier) > -1) {
         const userId = identifier.match(re)[1];
         const user = await User.findOne(userId);
         push.send(JSON.stringify(ctx.request.body, null, 2), user.push_token);

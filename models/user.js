@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
   platform: String, // Android, iOS, etc.
-  neura_id: String,
+  neura_token: String,
   push_token: String,
 }, {
   timestamps: {

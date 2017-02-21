@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
-
 module.exports = function connectDatabase(uri) {
   return new Promise((resolve, reject) => {
     mongoose.connection
@@ -9,7 +7,7 @@ module.exports = function connectDatabase(uri) {
       .on('close', () => console.log('Database connection closed.'))
       .once('open', () => resolve(mongoose.connections[0]));
 
-    mongoose.connect(uri);
+    mongoose.connect(uri, { promiseLibrary: global.Promise });
   });
 };
 

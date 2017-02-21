@@ -33,9 +33,19 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
 
     app.use(route.post('/neuraevent', async (ctx) => {
       console.log('post neuraevent:', ctx.request.body);
-      const user = await User.findOne(ctx.request.body.neura_id);
-      push.send(JSON.stringify(ctx.request.body, null, 2), user.push_token);
-      ctx.body = ctx.request.body;
+      const identifier = ctx.request.body.identifier;
+      const re = new RegExp(/[a-zA-Z0-9]+_(.*)/);
+
+      if (re.search(identifier) > -1) {
+        const userId = identifier.match(re)[1];
+        const user = await User.findOne(userId);
+        push.send(JSON.stringify(ctx.request.body, null, 2), user.push_token);
+        ctx.body = ctx.request.body;
+        return ctx.body;
+      }
+      ctx.status = 500;
+      ctx.body = 'User not found';
+      return ctx.body;
     }));
 
     app.use(route.post('/user', async (ctx) => {

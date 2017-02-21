@@ -1,11 +1,11 @@
 const User = require('../models/user');
 
 const userController = {
-  findOne: (neuraId) => new User.findOne({ neura_id: neuraId }),
+  findOne: (userId) => new User.findOne({ _id: userId }),
 
   createOrUpdate: async (data) => {
     const existingUser = await User.findOne({
-      neura_id: data.neura_id,
+      neura_token: data.neura_token,
       platform: data.platform,
     });
     let user;
@@ -13,7 +13,7 @@ const userController = {
     if (!existingUser) {
       user = await User.create({
         platform: data.platform,
-        neura_id: data.neura_id,
+        neura_token: data.neura_token,
         push_token: data.push_token,
       });
       return user;

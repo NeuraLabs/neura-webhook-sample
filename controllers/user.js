@@ -4,7 +4,10 @@ const userController = {
   findOne: (neuraId) => new User.findOne({ neura_id: neuraId }),
 
   createOrUpdate: async (data) => {
-    const existingUser = await User.findOne({ neura_id: data.neura_id });
+    const existingUser = await User.findOne({
+      neura_id: data.neura_id,
+      platform: data.platform,
+    });
     let user;
     console.log('create or update: ', existingUser);
     if (!existingUser) {
@@ -13,14 +16,11 @@ const userController = {
         neura_id: data.neura_id,
         push_token: data.push_token,
       });
-    } else {
-      user = await User.update({ neura_id: data.neura_id }, {
-        platform: data.platform,
-        neura_id: data.neura_id,
-        push_token: data.push_token,
-      });
+      return user;
     }
-    return user;
+
+    existingUser.push_token = data.push_token;
+    return existingUser.save();
   },
 };
 

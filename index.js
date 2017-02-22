@@ -4,6 +4,7 @@ const route = require('koa-route');
 const APNProvider = require('./providers/apn');
 const User = require('./controllers/user');
 const connectDatabase = require('./db');
+const neuraEventsHandler = require('./controllers/neuraEventsHandler');
 
 const port = process.env.PORT || 3000;
 const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
@@ -40,7 +41,8 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
         const userId = identifier.match(re)[1];
         const user = await User.findOne(userId);
         if (user) {
-          push.send(JSON.stringify(ctx.request.body, null, 2), user.push_token);
+          const message = neuraEventsHandler.getMessageForEvent(ctx.request.body.event.name);
+          push.send(message, user.push_token);
 
           ctx.body = ctx.request.body;
           return ctx.body;

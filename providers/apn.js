@@ -17,17 +17,11 @@ class APNProvider {
   send(content, deviceToken) {
     const note = new apn.Notification();
     console.log('apn send:', content, deviceToken);
-    // {
-    //   "messageFrom":"John Appelseed","aps":
-    //   {
-    //     "badge":3,"sound":"ping.aiff","alert":"\uD83D\uDCE7 \u2709 You have a new message"
-    //   }
-    // }
     note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-    note.badge = 3;
+    note.badge = 1;
     note.sound = 'ping.aiff';
-    note.alert = `\uD83D\uDCE7 \u2709 You have a new message, ${content}`;
-    note.payload = { messageFrom: 'John Appleseed' };
+    note.alert = content;
+    note.payload = { messageFrom: 'Med Adherence Server' };
     note.topic = 'com.neura.medicationn';
 
     this.apnProvider.send(note, deviceToken).then((result) => {

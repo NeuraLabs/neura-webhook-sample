@@ -14,7 +14,7 @@ class APNProvider {
     this.apnProvider = new apn.Provider(this.options);
   }
 
-  send(content, deviceToken) {
+  send(content, deviceToken, category) {
     const note = new apn.Notification();
     console.log('apn send:', content, deviceToken);
     note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
@@ -23,6 +23,7 @@ class APNProvider {
     note.alert = content;
     note.payload = { messageFrom: 'Med Adherence Server' };
     note.topic = 'com.neura.medicationn';
+    note.category = category;
 
     this.apnProvider.send(note, deviceToken).then((result) => {
       // see documentation for an explanation of result

@@ -42,7 +42,8 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
         const user = await User.findOne(userId);
         if (user) {
           const message = neuraEventsHandler.getMessageForEvent(ctx.request.body.event.name);
-          push.send(message, user.push_token);
+          const category = neuraEventsHandler.getCategoryForEvent(ctx.request.body.event.name);
+          push.send(message, user.push_token, category);
 
           ctx.body = ctx.request.body;
           return ctx.body;

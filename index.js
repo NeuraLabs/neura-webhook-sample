@@ -39,12 +39,16 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
       if (identifier.search(identifier) > -1) {
         const userId = identifier.match(re)[1];
         const user = await User.findOne(userId);
-        push.send(JSON.stringify(ctx.request.body, null, 2), user.push_token);
-        ctx.body = ctx.request.body;
-        return ctx.body;
+        if (user) {
+          push.send(JSON.stringify(ctx.request.body, null, 2), user.push_token);
+
+          ctx.body = ctx.request.body;
+          return ctx.body;
+        }
       }
       ctx.status = 500;
       ctx.body = 'User not found';
+      console.error(ctx.body);
       return ctx.body;
     }));
 

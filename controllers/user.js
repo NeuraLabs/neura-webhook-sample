@@ -1,10 +1,7 @@
 const User = require('../models/user');
 
 const userController = {
-  findOne: async (userId) => {
-    const user = await User.findOne({ _id: userId });
-    return user;
-  },
+  findOne: (userId) => User.findOne({ _id: userId }),
 
   createOrUpdate: async (data) => {
     const existingUser = await User.findOne({

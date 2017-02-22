@@ -34,9 +34,9 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
     app.use(route.post('/neuraevent', async (ctx) => {
       console.log('post neuraevent:', ctx.request.body);
       const identifier = ctx.request.body.identifier;
-      const re = new RegExp(/[a-zA-Z0-9]+_(.*)/);
+      const re = new RegExp(/[a-zA-Z0-9]+_(.+)/);
 
-      if (identifier.search(identifier) > -1) {
+      if (identifier.search(re) > -1) {
         const userId = identifier.match(re)[1];
         const user = await User.findOne(userId);
         if (user) {

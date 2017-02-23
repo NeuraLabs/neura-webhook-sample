@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -e js,json index.js",
-    "dev:debug": "nodemon --inspect -e js,json index.js",
+    "dev:debug": "nodemon --inspect --inspect-brk -e js,json index.js",
     "lint": "eslint *.js",
     "lint:staged": "lint-staged"
   },

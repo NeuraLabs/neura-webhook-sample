@@ -4,9 +4,9 @@
   "description": "Sample webhook server for Neura events",
   "main": "index.js",
   "scripts": {
-    "start": "node --harmony index.js",
-    "dev": "nodemon --harmony -e js,json index.js",
-    "dev:debug": "nodemon --harmony --inspect -e js,json index.js",
+    "start": "node index.js",
+    "dev": "nodemon -e js,json index.js",
+    "dev:debug": "nodemon --inspect -e js,json index.js",
     "lint": "eslint *.js",
     "lint:staged": "lint-staged"
   },
@@ -22,7 +22,7 @@
   "author": "Matias Crivolotti <matias@theneura.com>",
   "license": "MIT",
   "engines": {
-    "node": "^7.5.0"
+    "node": "^7.6.0"
   },
   "lint-staged": {
     "*.js": "lint"

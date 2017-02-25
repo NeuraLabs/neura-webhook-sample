@@ -1,7 +1,6 @@
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const route = require('koa-route');
-const APNProvider = require('./providers/apn');
 const User = require('./controllers/user');
 const connectDatabase = require('./db');
 const neuraEventsHandler = require('./controllers/neuraEventsHandler');
@@ -11,14 +10,10 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
 
 (async () => {
   try {
-    const push = new APNProvider();
-    console.log('Connected to apple push notification service');
-
     const db = await connectDatabase(mongoUri);
     console.log(`Connected to ${db.host}:${db.port}/${db.name}`);
 
     const app = new Koa();
-
     app.use(bodyParser());
 
     // handle thrown or uncaught exceptions anywhere down the line
@@ -41,10 +36,7 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
         const userId = identifier.match(re)[1];
         const user = await User.findOne(userId);
         if (user) {
-          const message = neuraEventsHandler.getMessageForEvent(ctx.request.body.event.name);
-          const category = neuraEventsHandler.getCategoryForEvent(ctx.request.body.event.name);
-          push.send(message, user.push_token, category);
-
+          neuraEventsHandler.handleEventForUser(ctx.request.body.event.name, user);
           ctx.body = ctx.request.body;
           return ctx.body;
         }

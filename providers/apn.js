@@ -14,14 +14,14 @@ class APNProvider {
     this.apnProvider = new apn.Provider(this.options);
   }
 
-  send(content, deviceToken, category) {
+  send(content, deviceToken, category, event) {
     const note = new apn.Notification();
     console.log('apn send:', content, deviceToken);
     note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
     note.badge = 1;
     note.sound = 'ping.aiff';
     note.alert = content;
-    note.payload = { messageFrom: 'Med Adherence Server' };
+    note.payload = { messageFrom: 'Med Adherence Server', event_type: event };
     note.topic = 'com.neura.medicationn';
     note.category = category;
 

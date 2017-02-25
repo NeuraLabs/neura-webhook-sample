@@ -10,7 +10,7 @@ const eventHandler = {
   handleEventForUser: async (eventName, user) => {
     const push = new APNProvider();
     console.log('Connected to apple push notification service');
-    const category = this.getCategoryForEvent(eventName);
+    const category = eventHandler.getCategoryForEvent(eventName);
     switch (eventName) {
       case 'userWokeUp':
         push.send(morningMessage, user.push_token, category, 'userWokeUp');

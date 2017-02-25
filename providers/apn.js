@@ -1,10 +1,9 @@
 const apn = require('apn');
 
 class APNProvider {
-  constructor(appName) {
+  constructor() {
     const certPath = process.env.CERT_PATH || 'certificates/';
     const certName = process.env.CERT_NAME || 'medAdKey.p12';
-    this.appName = appName;
 
     this.options = {
       pfx: `${certPath}${certName}`,

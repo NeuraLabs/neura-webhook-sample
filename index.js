@@ -1,3 +1,10 @@
+/**
+ * An example for a webhook. A webhook is the preffered option for Neura to
+ * send you events about your users. (e.g. when the user arrives at work)
+ * The webhook implements a simple push notification interface for apple devices
+ * The database is a MongoDB using mongoose interface
+ */
+
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const route = require('koa-route');
@@ -27,6 +34,8 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
       }
     });
 
+    // The webhook to add to your app page in dev.theneura.com.
+    // See ./controllers/neuraEventsHandler.js
     app.use(route.post('/neuraevent', async (ctx) => {
       console.log('post neuraevent:', ctx.request.body);
       const identifier = ctx.request.body.identifier;
@@ -47,6 +56,11 @@ const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
       return ctx.body;
     }));
 
+    // An endpoint to add users from your app.
+    // the user object is returned to the app, the neura event subscription (done in the app)
+    // needs the user _id to make sure the event identifier is unique to a specific user
+    // thus allowing us to trigger the push notification to the relevan user
+    // See ./models/user.js ./controllers/user.js
     app.use(route.post('/user', async (ctx) => {
       console.log('post user:', ctx.request.body);
       const user = await User.createOrUpdate(ctx.request.body);

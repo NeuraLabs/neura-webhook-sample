@@ -4,6 +4,10 @@ One of the best ways to be notified about Neura's user events is through a webho
 
 This sample does the job for you. An out of the box tiny server app built on node.js, with just the needed components to [get you started](#using-the-server). It can also be used as a test server using [Heroku](#heroku)
 
+* Some more details about the webhook request format can be found [here](https://dev.theneura.com/docs/api/events#push-event)
+* Create an app using [this guide](https://dev.theneura.com/docs/guide/ios/setup)
+* Add the webhook to your app [here](https://dev.theneura.com/console/apps)
+
 ## Requirements
 
 * NodeJS >= 7.6.0
@@ -16,6 +20,18 @@ The webhook is implemented in the '/neuraevent' endpoint which in turn call hand
 ### Push Notifications
 [Push providers](./providers)
 The server supports [apns](./providers/apn.js]) (Apple push notification server). Adding gcm is planned in the near futureor through pull requests ;)
+The server expect a p12 certificate under "process.env.CERT_PATH" with "process.env.CERT_NAME" (the default location is ./certificates folder with medAdKey.p12 certificate name)
+
+The certificates can be obtained through Apple's [developer account](https://developer.apple.com/account)
+* Go to Certificates, Identifiers & Profiles
+* Click on All under Certificates and than click on '+' on the top right corner
+* We recommend a single certificate for both production & sandbox (easier to manage) - choose Apple Push Notification service SSL (Sandbox & Production) and click continue
+* Select your app ID, click continue and follow the instructions on screen
+* Download the production push certificate that you just created and open it in the Keychain Access application
+* In Keychain Access, click on "My Certificates" and locate your push certificate
+* Export it as a .p12 file (password is optional)
+
+* Apple's push notification guide can be found [here](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/AddingCapabilities/AddingCapabilities.html#//apple_ref/doc/uid/TP40012582-Ch36-SW7)
 
 ### Users
 The [user model](./models/user.js) contains some simple properties:

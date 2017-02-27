@@ -70,12 +70,12 @@ npm run start
 * Choose an app name (unique) and click Create App
 * Choose your deployment method
   * Fork this repo and link your github
-  * Use the steps to create a remote git repo on heroku (will look like https://git.heroku.com/<your app name>.git)
+  * Follow the steps on screen under Heroku Git to create a remote git repo on heroku which will look like ```https://git.heroku.com/<your app name>.git```
 * Push this code to the new git origin **master** branch
 
 * Under the Resources tab, add the mLab mongo DB plugin (to add the free tier you'll have to verify your account by adding a credit card - you'll receive more free credit just by adding it)
   * A process.env variable is automatically created which is called MONGODB_URI with the db connection string
-* Your app's url address is "https://<your app name>.herokuapp.com"
+* Your app's url address is ```https://<your app name>.herokuapp.com```
 * Enjoy :)
 
 ## License

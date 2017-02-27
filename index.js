@@ -13,7 +13,7 @@ const connectDatabase = require('./db');
 const neuraEventsHandler = require('./controllers/neuraEventsHandler');
 
 const port = process.env.PORT || 3000;
-const mongoUri = process.env.MONGO_URL || 'mongodb://localhost/MedAd';
+const mongoUri = process.env.MONGO_URL || process.env.MONGODB_URI || 'mongodb://localhost/MedAd';
 
 (async () => {
   try {

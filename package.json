@@ -19,7 +19,7 @@
     "notification",
     "push"
   ],
-  "author": "Matias Crivolotti <matias@theneura.com>",
+  "author": "Youval Vaknin <youval@theneura.com>",
   "repository": "https://github.com/NeuraLabs/neura-webhook-sample.git",
   "license": "MIT",
   "engines": {
